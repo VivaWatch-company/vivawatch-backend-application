@@ -14,7 +14,7 @@
     "start:app2": "nest start --watch client-partner",
     "start:app3": "nest start --watch platform-partner",
     "start:all": "concurrently \"npm run start:app1\" \"npm run start:app2\"",
-    "start:prod:all": "pm2 start ecosystem.config.js",
+    "start:prod:all": "pm2 start ecosystem.config.js --watch",
     "start:debug": "nest start --debug --watch",
     "start:prod": "node dist/apps/vivawatch-backend-application/main",
     "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
