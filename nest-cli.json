@@ -1,11 +1,11 @@
 {
   "$schema": "https://json.schemastore.org/nest-cli",
   "collection": "@nestjs/schematics",
-  "sourceRoot": "apps/vivawatch-backend-application/src",
+  "sourceRoot": "apps/moderator-partner/src",
   "compilerOptions": {
     "deleteOutDir": true,
     "webpack": true,
-    "tsConfigPath": "apps/vivawatch-backend-application/tsconfig.app.json"
+    "tsConfigPath": "apps/moderator-partner/tsconfig.app.json"
   },
   "projects": {
     "client-partner": {
@@ -35,16 +35,16 @@
         "tsConfigPath": "apps/platform-partner/tsconfig.app.json"
       }
     },
-    "vivawatch-backend-application": {
+    "moderator-partner": {
       "type": "application",
-      "root": "apps/vivawatch-backend-application",
+      "root": "apps/moderator-partner",
       "entryFile": "main",
-      "sourceRoot": "apps/vivawatch-backend-application/src",
+      "sourceRoot": "apps/moderator-partner/src",
       "compilerOptions": {
-        "tsConfigPath": "apps/vivawatch-backend-application/tsconfig.app.json"
+        "tsConfigPath": "apps/moderator-partner/tsconfig.app.json"
       }
     }
   },
   "monorepo": true,
-  "root": "apps/vivawatch-backend-application"
+  "root": "apps/moderator-partner"
 }

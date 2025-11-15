@@ -1,12 +1,13 @@
-import { CreatePlanDto } from 'apps/vivawatch-backend-application/src/plan/dto/create-plan.dto';
-import { PrismaClient } from 'generated/prisma/client';
+import { PrismaClient } from '@prisma/client';
+import { CreatePlanDto } from 'apps/moderator-partner/src/plan/dto/create-plan.dto';
+import { PlanIntervalEnum } from 'apps/moderator-partner/src/plan/enums/plan-interval.enum';
 
 export async function PlanSeeder(prismaClient: PrismaClient) {
   const plans: CreatePlanDto[] = [
     {
       name: 'Essencial',
       price: 8.98,
-      period: 'MONTHLY',
+      period: PlanIntervalEnum.MONTHLY,
       isActive: true,
       planBenefits: [
         {
@@ -37,7 +38,7 @@ export async function PlanSeeder(prismaClient: PrismaClient) {
     {
       name: 'Avançado',
       price: 28.79,
-      period: 'MONTHLY',
+      period: PlanIntervalEnum.MONTHLY,
       isActive: true,
       planBenefits: [
         {
@@ -67,7 +68,7 @@ export async function PlanSeeder(prismaClient: PrismaClient) {
     {
       name: 'Profissional',
       price: 58.97,
-      period: 'MONTHLY',
+      period: PlanIntervalEnum.MONTHLY,
       isMain: true,
       isActive: true,
       planBenefits: [
@@ -105,18 +106,25 @@ export async function PlanSeeder(prismaClient: PrismaClient) {
   try {
     for (const plan of plans) {
       const { planBenefits, ...rest } = plan;
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access
-      await prismaClient.plan.create({
-        data: {
-          ...rest,
-          planBenefits: {
-            create: planBenefits.map((benefit) => ({
-              title: benefit.title,
-              description: benefit.description,
-            })),
-          },
+      const planExists = await prismaClient.plan.findUnique({
+        where: {
+          name: plan.name,
         },
       });
+
+      if (!planExists) {
+        await prismaClient.plan.create({
+          data: {
+            ...rest,
+            planBenefits: {
+              create: planBenefits.map((benefit) => ({
+                title: benefit.title,
+                description: benefit.description,
+              })),
+            },
+          },
+        });
+      }
     }
   } catch (error) {
     if (error instanceof Error) {

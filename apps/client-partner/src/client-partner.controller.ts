@@ -1,12 +1,17 @@
-import { Controller, Get } from '@nestjs/common';
-import { ClientPartnerService } from './client-partner.service';
+import { PlanService } from '@app/core/plans/plan.service';
+import { Controller, Get, Param } from '@nestjs/common';
 
-@Controller()
+@Controller('plan-client')
 export class ClientPartnerController {
-  constructor(private readonly clientPartnerService: ClientPartnerService) {}
+  constructor(private readonly clientPartnerService: PlanService) {}
 
   @Get()
-  getHello(): string {
-    return this.clientPartnerService.getHello();
+  getHello() {
+    return this.clientPartnerService.findAll();
+  }
+
+  @Get(':id')
+  async getOne(@Param('id') id: string) {
+    return await this.clientPartnerService.findOne(id);
   }
 }

@@ -1,9 +1,17 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
-import { PlanService } from './plan.service';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { CreatePlanDto } from './dto/create-plan.dto';
 import { UpdatePlanDto } from './dto/update-plan.dto';
+import { PlanService } from '@app/core/plans/plan.service';
 
-@Controller('plan')
+@Controller('plan-admin')
 export class PlanController {
   constructor(private readonly planService: PlanService) {}
 
@@ -19,16 +27,16 @@ export class PlanController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.planService.findOne(+id);
+    return this.planService.findOne(id);
   }
 
   @Patch(':id')
   update(@Param('id') id: string, @Body() updatePlanDto: UpdatePlanDto) {
-    return this.planService.update(+id, updatePlanDto);
+    return this.planService.update(id, updatePlanDto);
   }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.planService.remove(+id);
+    return this.planService.remove(id);
   }
 }

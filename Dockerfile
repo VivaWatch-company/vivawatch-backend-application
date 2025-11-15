@@ -4,7 +4,7 @@ ARG IMG=node:22-alpine
 
 FROM ${IMG} AS builder
 
-WORKDIR /app
+WORKDIR /home/node/app
 
 COPY . .
 
@@ -20,9 +20,9 @@ COPY ./entrypoint.sh /entrypoint.sh
 
 RUN chmod +x /entrypoint.sh
 
-ENTRYPOINT [ "sh", "entrypoint.sh" ]
+EXPOSE 8080
 
-CMD [""]
+ENTRYPOINT [ "sh", "entrypoint.sh" ]
 
 
 # PROD MIDDLE STEP
@@ -38,17 +38,14 @@ RUN npm prune --production # this will clean up our node_modules
 FROM ${IMG} AS prod
 
 # we need to understand in depth the reason of this command and the subsequently commands
-COPY --chown=node:node --from=prod-build /app/dist /app/dist 
-COPY --chown=node:node --from=prod-build /app/node_modules /app/node_modules
-COPY --chown=node:node --from=prod-build /app/.env /app/.env
+COPY --chown=node:node --from=prod-build /home/node/app/dist /app/dist 
+COPY --chown=node:node --from=prod-build /home/node/app/node_modules app/node_modules
+COPY --chown=node:node --from=prod-build /home/node/app/.env /app/.env
 
 ENV NODE_ENV=production
 
 ENTRYPOINT ["node", "main.js"]
 
-# Não entendi muito bem
 WORKDIR /app/dist
 
 CMD [""]
-
-USER node

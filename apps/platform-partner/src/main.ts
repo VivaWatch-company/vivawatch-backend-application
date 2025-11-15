@@ -3,6 +3,6 @@ import { PlatformPartnerModule } from './platform-partner.module';
 
 async function bootstrap() {
   const app = await NestFactory.create(PlatformPartnerModule);
-  await app.listen(process.env.port ?? 3000);
+  await app.listen(process.env.PLATFORMPARTNER ?? 3003);
 }
 bootstrap();

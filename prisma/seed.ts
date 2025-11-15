@@ -1,5 +1,5 @@
-import { PrismaClient } from 'generated/prisma/client';
-import { PlanSeeder } from './seed-factories/plan.seeder';
+import { PrismaClient } from '@prisma/client';
+import { PlanSeeder } from './seeds/plan.seeder';
 
 const prismaClient = new PrismaClient();
 

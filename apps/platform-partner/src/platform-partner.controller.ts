@@ -3,7 +3,9 @@ import { PlatformPartnerService } from './platform-partner.service';
 
 @Controller()
 export class PlatformPartnerController {
-  constructor(private readonly platformPartnerService: PlatformPartnerService) {}
+  constructor(
+    private readonly platformPartnerService: PlatformPartnerService,
+  ) {}
 
   @Get()
   getHello(): string {
