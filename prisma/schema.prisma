@@ -9,6 +9,7 @@ datasource db {
 }
 
 enum UserRole {
+  MODERATOR
   ADMIN
   CAREGIVER
   ELDERLY
@@ -68,11 +69,12 @@ enum PlanInterval {
 }
 
 model User {
-  id           String   @id @default(uuid())
-  name         String
-  email        String   @unique
-  passwordHash String
-  role         UserRole
+  id       String   @id @default(uuid())
+  name     String
+  document String   @unique
+  email    String   @unique
+  password String
+  role     UserRole
 
   ownDevice     Device?        @relation("DeviceOwner")
   careDevices   Device[]       @relation("DeviceCaregiver")
@@ -104,12 +106,12 @@ model Subscription {
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
 
-  payments subscriptionPayment[]
+  payments SubscriptionPayment[]
 
   @@map("subscription")
 }
 
-model subscriptionPayment {
+model SubscriptionPayment {
   id             String       @id @default(uuid())
   subscriptionId String       @map("subscription_id")
   subscription   Subscription @relation(fields: [subscriptionId], references: [id])
@@ -132,10 +134,10 @@ model subscriptionPayment {
 model Plan {
   id       String       @id @default(uuid())
   name     String
-  price    Decimal
-  currency String       @default("BRL")
-  interval PlanInterval // MONTHLY, YEARLY, etc.
-  isMain   Boolean      @map("is_main")
+  price    Float
+  period   PlanInterval // MONTHLY, YEARLY, etc.
+  isMain   Boolean      @default(false) @map("is_main")
+  isActive Boolean      @map("is_active")
 
   planBenefits  PlanBenefit[]
   subscriptions Subscription[]

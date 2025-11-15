@@ -1,0 +1,11 @@
+name: viva_testing
+
+services:
+  test-db:
+    image: 'postgres:16'
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_DB=viva_test
+    ports:
+      - '5432:5432'
