@@ -29,7 +29,7 @@ export class SubscriptionClientController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.subscriptionClientService.findOne(+id);
+    return this.subscriptionClientService.findOne(id);
   }
 
   @Patch(':id')

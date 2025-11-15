@@ -2,12 +2,12 @@ import { Module } from '@nestjs/common';
 import { CoreService } from './core.service';
 import { PrismaModule } from './prisma/prisma.module';
 import { ResendModule } from './resend/resend.module';
-import { UsersModule } from './users/users-core.module';
+import { UsersCoreModule } from './users/users-core.module';
 import { SubscriptionModule } from './subscription/subscription.module';
 
 @Module({
   providers: [CoreService],
   exports: [CoreService],
-  imports: [PrismaModule, ResendModule, UsersModule, SubscriptionModule],
+  imports: [PrismaModule, ResendModule, UsersCoreModule, SubscriptionModule],
 })
 export class CoreModule {}

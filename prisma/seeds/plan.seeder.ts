@@ -1,13 +1,11 @@
-import { PrismaClient } from '@prisma/client';
-import { CreatePlanDto } from 'apps/moderator-partner/src/plan/dto/create-plan.dto';
-import { PlanIntervalEnum } from 'apps/moderator-partner/src/plan/enums/plan-interval.enum';
+import { $Enums, PrismaClient } from '@prisma/client';
 
 export async function PlanSeeder(prismaClient: PrismaClient) {
-  const plans: CreatePlanDto[] = [
+  const plans: any[] = [
     {
       name: 'Essencial',
       price: 8.98,
-      period: PlanIntervalEnum.MONTHLY,
+      period: $Enums.PlanInterval.MONTHLY,
       isActive: true,
       planBenefits: [
         {
@@ -38,7 +36,7 @@ export async function PlanSeeder(prismaClient: PrismaClient) {
     {
       name: 'Avançado',
       price: 28.79,
-      period: PlanIntervalEnum.MONTHLY,
+      period: $Enums.PlanInterval.MONTHLY,
       isActive: true,
       planBenefits: [
         {
@@ -68,7 +66,7 @@ export async function PlanSeeder(prismaClient: PrismaClient) {
     {
       name: 'Profissional',
       price: 58.97,
-      period: PlanIntervalEnum.MONTHLY,
+      period: $Enums.PlanInterval.MONTHLY,
       isMain: true,
       isActive: true,
       planBenefits: [

@@ -26,6 +26,7 @@ services:
     command: npm run start:dev
     stdin_open: true
     tty: true
+    restart: always
     volumes:
       - .:/home/node/app
       - /home/node/app/node_modules
@@ -43,7 +44,7 @@ services:
       - CLIENTPARTNERPORT=8082
       - PLATFORMPARTNER=8083
       - MODERATORPARTNER=8081
-      - DATABASE_URL=postgresql://postgres:password@db:5432/viva_development?schema=public"
+      - DATABASE_URL=postgresql://postgres:password@db:5432/viva_development"
 
 volumes:
   postgres: {}
