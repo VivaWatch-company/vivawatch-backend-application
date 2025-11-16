@@ -1,46 +1,20 @@
-import {
-  Controller,
-  Get,
-  Post,
-  Body,
-  Patch,
-  Param,
-  Delete,
-} from '@nestjs/common';
+import { Controller, Post, Body } from '@nestjs/common';
 import { CreateUserClientDto } from './dto/create-user-client.dto';
-import { UpdateUserClientDto } from './dto/update-user-client.dto';
-import { UsersCoreService } from '@app/core/users/users-core.service';
-import { User } from '@prisma/client';
+import { UserRole } from '@prisma/client';
+import { plainToInstance } from 'class-transformer';
+import { UserEntity } from '@app/core/users/entity/user.entity';
+import { UserClientService } from './user-client.service';
 
 @Controller('user-client')
 export class UserClientController {
-  constructor(private readonly userClientService: UsersCoreService) {}
+  constructor(private readonly userClientService: UserClientService) {}
 
   @Post()
-  create(@Body() createUserClientDto: CreateUserClientDto) {
-    return this.userClientService.create(createUserClientDto as User);
-  }
-
-  @Get()
-  findAll() {
-    return this.userClientService.findAll();
-  }
-
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.userClientService.findOne(id);
-  }
-
-  @Patch(':id')
-  update(
-    @Param('id') id: string,
-    @Body() updateUserClientDto: UpdateUserClientDto,
-  ) {
-    return this.userClientService.update(id, updateUserClientDto);
-  }
-
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.userClientService.delete(id);
+  create(@Body() dto: CreateUserClientDto) {
+    const data = plainToInstance(UserEntity, {
+      ...dto,
+      role: UserRole.ADMIN,
+    });
+    return this.userClientService.create(data);
   }
 }

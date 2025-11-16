@@ -35,13 +35,11 @@ export class PlanRepository implements IRepository<Plan> {
   }
 
   async findAll(): Promise<Plan[]> {
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     return await this.prismaService.plan.findMany({
       include: { planBenefits: true },
     });
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-redundant-type-constituents
   async findById(id: string): Promise<Plan | null> {
     return await this.prismaService.plan.findUnique({
       where: { id },

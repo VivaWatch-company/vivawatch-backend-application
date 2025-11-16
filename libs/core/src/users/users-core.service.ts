@@ -1,12 +1,13 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { UserCoreRepository } from './user-repository/user-repository';
 import { User } from '@prisma/client';
+import { UserEntity } from './entity/user.entity';
 
 @Injectable()
 export class UsersCoreService {
   constructor(private readonly userCoreRepository: UserCoreRepository) {}
 
-  async create(createUser: User): Promise<User> {
+  async create(createUser: UserEntity): Promise<User> {
     return await this.userCoreRepository.create(createUser);
   }
 

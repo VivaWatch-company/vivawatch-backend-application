@@ -1,11 +1,12 @@
 import { IRepository } from '@app/core/commons/IRepository';
 import { PrismaService } from '@app/core/prisma/prisma.service';
 import { User } from '@prisma/client';
+import { UserEntity } from '../entity/user.entity';
 
 export class UserCoreRepository implements IRepository<User> {
   constructor(private readonly prismaService: PrismaService) {}
 
-  async create(createUserData: User): Promise<User> {
+  async create(createUserData: UserEntity): Promise<User> {
     return this.prismaService.user.create({
       data: {
         name: createUserData.name,
