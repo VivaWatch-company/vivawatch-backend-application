@@ -11,7 +11,9 @@ describe('ClientPartnerController', () => {
       providers: [ClientPartnerService],
     }).compile();
 
-    clientPartnerController = app.get<ClientPartnerController>(ClientPartnerController);
+    clientPartnerController = app.get<ClientPartnerController>(
+      ClientPartnerController,
+    );
   });
 
   describe('root', () => {
