@@ -11,7 +11,9 @@ describe('PlatformPartnerController', () => {
       providers: [PlatformPartnerService],
     }).compile();
 
-    platformPartnerController = app.get<PlatformPartnerController>(PlatformPartnerController);
+    platformPartnerController = app.get<PlatformPartnerController>(
+      PlatformPartnerController,
+    );
   });
 
   describe('root', () => {
