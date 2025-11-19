@@ -47,6 +47,14 @@ export class PlanRepository implements IRepository<Plan> {
     });
   }
 
+  async findByName(name: string) {
+    return await this.prismaService.plan.findUnique({
+      where: {
+        name,
+      },
+    });
+  }
+
   async update(id: string, data: UpdatePlanDto): Promise<Plan> {
     return await this.prismaService.plan.update({
       where: { id },
@@ -74,8 +82,8 @@ export class PlanRepository implements IRepository<Plan> {
     });
   }
 
-  async delete(id: string): Promise<void> {
-    await this.prismaService.plan.delete({
+  async delete(id: string): Promise<Plan> {
+    return await this.prismaService.plan.delete({
       where: { id },
     });
   }
