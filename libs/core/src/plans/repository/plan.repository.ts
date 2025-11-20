@@ -82,7 +82,7 @@ export class PlanRepository implements IRepository<Plan> {
     });
   }
 
-  async delete(id: string): Promise<Plan> {
+  async delete(id: string): Promise<Plan | void> {
     return await this.prismaService.plan.delete({
       where: { id },
     });

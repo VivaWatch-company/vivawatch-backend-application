@@ -4,15 +4,30 @@ ARG IMG=node:22-alpine
 
 FROM ${IMG} AS builder
 
+# Install procps for live reloading
+RUN apk update --no-cache bash &&\
+  apk add procps && \
+  rm -rf /var/cache/apk/*
+
+
 WORKDIR /home/node/app
 
 COPY . .
 
+RUN chown -R node:node /home/node/app
+
+USER node
+
 RUN npm install
 
 #DEVELOPMENT
-
 FROM builder AS dev
+
+ENV NODE_ENV=development
+
+RUN chown -R node:node /home/node/app
+
+USER node
 
 RUN apk add --no-cache bash
 
@@ -26,7 +41,6 @@ ENTRYPOINT [ "sh", "entrypoint.sh" ]
 
 
 # PROD MIDDLE STEP
-
 FROM builder AS prod-build
 
 RUN npm run build
