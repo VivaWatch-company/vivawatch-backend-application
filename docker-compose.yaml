@@ -1,12 +1,5 @@
 name: viva_development_compose
 services:
-  stripe:
-   image: 'stripe/stripe-cli'
-   networks:
-    - viva_network
-   command: 'listen --api-key ${STRIPE_SECRET_KEY} --forward-connect-to http://app:8082/stripe/webhook'
-   depends_on:
-    - app
   db:
     image: 'postgres:15.7'
     ports:
@@ -30,7 +23,7 @@ services:
       context: .
       dockerfile: Dockerfile
       target: dev
-    command: npm run start:dev
+    command: npm run start:all
     stdin_open: true
     tty: true
     volumes:
@@ -51,7 +44,7 @@ services:
       - PLATFORMPARTNER=8083
       - MODERATORPARTNER=8081
       - DATABASE_URL=postgresql://postgres:password@db:5432/viva_development
-      - STRIPE_WEBHOOK_SECRET=${STRIPE_WEBHOOK_SECRET}
+      - STRIPE_WEBHOOK_SECRET=${STRIPE_SECRET_KEY}
     extra_hosts:
       - "host.docker.internal:host-gateway"
 

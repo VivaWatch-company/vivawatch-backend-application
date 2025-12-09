@@ -3,7 +3,6 @@ import { UsersCoreService } from '@app/core/users/users-core.service';
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateSubscriptionDto } from './dto/create-subscription.dto';
 import { UpdateSubscriptionDto } from './dto/update-subscription.dto';
-import { PaymentMethod } from './enums/payment-method.enum';
 import { SubscriptionRepository } from './repository/subscription.repository';
 
 @Injectable()
@@ -14,24 +13,28 @@ export class SubscriptionsService {
     private readonly planService: PlanService,
   ) {}
   async create(createSubscriptionDto: CreateSubscriptionDto) {
-    const { userId, planId, paymentMethod } = createSubscriptionDto;
+    const { userId, planId } = createSubscriptionDto;
     const userExists = await this.userService.findOne(userId);
     const planExists = await this.planService.findOne(planId);
+
     if (!userExists) {
       throw new NotFoundException('User was not found');
     }
+
     if (!planExists) {
       throw new NotFoundException('Plan was not found');
     }
 
-    // criar subscription - > com status de criado
-    // criar subscription payment -> com status de pending ou algo que remeta a esperando pagamento
-    // ao gerar pagamento a gente gera a cobranaça para o user pagar e esperamos o tempo de pagamento(caso seja pix a subscription payment é criado)
-    // caso o método de pagamento seja cartão de crédito esperamos o webhook confirmar para criar tudo!
-    // criar com o tempo de expiração
+    // const payload = this.buildPaymentPayload(paymentMethod);
+    // return payload;
 
-    const payload = this.buildPaymentPayload(paymentMethod);
-    return payload;
+    // se o método de pagamento for pix
+
+    // criar uma subscription
+    setTimeout(() => {
+      // request para rota de simulação de webhook
+      // enviar os dados necessários do cliente para simularmos a subscription
+    }, 3000);
   }
 
   findOne(id: string) {
@@ -45,7 +48,8 @@ export class SubscriptionsService {
     };
   }
 
-  private buildPaymentPayload(paymentMethod: PaymentMethod) {
-    return paymentMethod;
-  }
+  // private buildPaymentPayload(paymentMethod: PaymentMethod) {
+  //   let paymentIntentObject;
+  //   return paymentMethod;
+  // }
 }

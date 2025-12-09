@@ -1,9 +1,11 @@
 import {
   IsEmail,
+  IsEnum,
   IsNotEmpty,
   IsString,
   IsStrongPassword,
 } from 'class-validator';
+import { DocumentType } from '../enums/document-type.enum';
 
 export class CreateUserClientDto {
   @IsNotEmpty()
@@ -17,6 +19,10 @@ export class CreateUserClientDto {
   @IsNotEmpty()
   @IsStrongPassword()
   password: string;
+
+  @IsNotEmpty()
+  @IsEnum(DocumentType)
+  documentType: DocumentType;
 
   @IsNotEmpty()
   @IsString()

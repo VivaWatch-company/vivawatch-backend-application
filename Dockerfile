@@ -4,6 +4,7 @@ ARG IMG=node:22-alpine
 
 FROM ${IMG} AS builder
 
+
 # Install procps for live reloading
 RUN apk update --no-cache bash &&\
   apk add procps && \
@@ -16,8 +17,6 @@ COPY . .
 
 RUN chown -R node:node /home/node/app
 
-USER node
-
 RUN npm install
 
 #DEVELOPMENT
@@ -27,15 +26,11 @@ ENV NODE_ENV=development
 
 RUN chown -R node:node /home/node/app
 
-USER node
-
-RUN apk add --no-cache bash
-
 COPY ./entrypoint.sh /entrypoint.sh
 
 RUN chmod +x /entrypoint.sh
 
-EXPOSE 8080
+RUN npm run build -- --all
 
 ENTRYPOINT [ "sh", "entrypoint.sh" ]
 

@@ -21,7 +21,29 @@ export class StripeService {
     );
   }
 
-  constructStripeEvent(req: RawBodyRequest<Request>, signature: string) {
+  handlePaymentWebhook(req: RawBodyRequest<Request>, signature: string) {
+    console.log(Buffer.isBuffer(req.body));
+    const event = this.constructStripeEvent(req, signature);
+    switch (event.type) {
+      case 'payment_intent.succeeded': {
+        console.log('Caiu aqui');
+        break;
+      }
+      case 'payment_method.attached': {
+        const paymentMethod = event.data.object;
+        console.log(paymentMethod);
+        console.log('PaymentMethod was attached to a Customer!');
+        break;
+      }
+      default:
+        console.log(`Unhandled event type ${event.type}`);
+    }
+  }
+
+  private constructStripeEvent(
+    req: RawBodyRequest<Request>,
+    signature: string,
+  ) {
     try {
       const event = this.stripe.webhooks.constructEvent(
         req.body,
