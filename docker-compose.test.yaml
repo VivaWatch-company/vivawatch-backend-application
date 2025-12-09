@@ -7,6 +7,6 @@ services:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=password
       - POSTGRES_DB=viva_test
-      - DATABASE_URL=postgresql://postgres:password@localhost:5432/via_test?schema=public"
+      - DATABASE_URL=postgresql://postgres:password@localhost:5432/via_test?schema=public
     ports:
       - '5432:5432'

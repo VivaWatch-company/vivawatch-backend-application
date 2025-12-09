@@ -18,6 +18,7 @@ enum UserRole {
   ADMIN
   CAREGIVER
   ELDERLY
+  DEFAULT
 }
 
 enum NotificationType {
@@ -121,6 +122,7 @@ model SubscriptionPayment {
   subscriptionId String       @map("subscription_id")
   subscription   Subscription @relation(fields: [subscriptionId], references: [id])
 
+  attempts      Int
   amount        Decimal
   currency      String                    @default("BRL")
   method        PaymentMethod
@@ -221,3 +223,8 @@ model Notification {
 
   @@map("notifications")
 }
+
+/**
+ * organization -> possui uma subscription(Já que os users admin terão subscriptions e vão gerenciar as organizations)
+ * subscription -> tem um payment que vai ser verificado todos os dias se está em dia
+ */
